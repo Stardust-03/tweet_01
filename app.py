@@ -96,14 +96,15 @@ def get_content_from_urls(urls):
     UnstructuredURLLoader = download_loader("UnstructuredURLLoader")
     loader = UnstructuredURLLoader(urls=urls, continue_on_failure=True, headers={"User-Agent": "value"})
     data=loader.load()
-    print(data)
-    return data
+    datas=data[0].text
+    print(datas)
+    return datas
   
 
 
 def summarise(data, query):
     text_splitter = CharacterTextSplitter(separator="\n", chunk_size=3000, chunk_overlap=200, length_function=len)
-    text = text_splitter.split_documents(data)    
+    text = text_splitter.split_text(data)    
 
     llm = OpenAI(model_name="gpt-3.5-turbo", temperature=.7)
     template = """
